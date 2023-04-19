@@ -3,6 +3,8 @@ from flask_oauthlib.client import OAuth
 #from flask_oauthlib.contrib.apps import github #import to make requests to GitHub's OAuth
 from flask import render_template
 
+import pymongo
+import sys
 import pprint
 import os
 
@@ -13,7 +15,7 @@ import os
 
 app = Flask(__name__)
 
-app.debug = False #Change this to False for production
+app.debug = True #Change this to False for production
 #os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1' #Remove once done debugging
 
 app.secret_key = os.environ['SECRET_KEY'] #used to sign session cookies
@@ -33,6 +35,12 @@ github = oauth.remote_app(
     authorize_url='https://github.com/login/oauth/authorize' #URL for github's OAuth login
 )
 
+connection_string = os.environ["MONGO_CONNECTION_STRING"]
+db_name = os.environ["MONGO_DBNAME"]
+    
+client = pymongo.MongoClient(connection_string)
+db = client[db_name]
+collection = db['Recipes']
 
 #context processors run before templates are rendered and add variable(s) to the template's context
 #context processors must return a dictionary 
@@ -48,7 +56,7 @@ def home():
 #redirect to GitHub's OAuth page and confirm callback URL
 @app.route('/login')
 def login():   
-    return github.authorize(callback=url_for('authorized', _external=True, _scheme='https')) #callback URL must match the pre-configured callback URL
+    return github.authorize(callback=url_for('authorized', _external=True, _scheme='http')) #callback URL must match the pre-configured callback URL
 
 @app.route('/logout')
 def logout():
