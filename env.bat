@@ -1,5 +1,0 @@
-set GITHUB_CLIENT_ID=11af9d564cc04b2ff5af
-set GITHUB_CLIENT_SECRET=913fdc310591df3ca0d57ddf2d174dfed7e829be
-set SECRET_KEY=forum
-set MONGO_CONNECTION_STRING=mongodb+srv://user1:0HNa3tcHbi6BVSBU@forumproject.rgp16to.mongodb.net/?retryWrites=true&w=majority
-set MONGO_DBNAME=RecipeForums
