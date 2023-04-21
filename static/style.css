@@ -10,3 +10,8 @@ span.right {
 	display: inline;
 	float: right;
 }
+
+a.log {
+	text-decoration: underline;
+	color: blue;
+}
