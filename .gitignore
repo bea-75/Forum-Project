@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 *~
 
 env.bat
@@ -92,3 +93,6 @@ ENV/
 
 # Rope project settings
 .ropeproject
+=======
+env.bat
+>>>>>>> dfe18f53d8d37d4c72331d2a26f621abfc44475d

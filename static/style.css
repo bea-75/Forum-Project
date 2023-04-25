@@ -5,3 +5,18 @@ body {
 #content {
      margin-left: 20px;
 }
+
+span.right {
+	display: inline;
+	float: right;
+}
+
+a.log {
+	text-decoration: none;
+	color: blue;
+}
+
+a.log:hover {
+	text-decoration: underline;
+	color: blue;
+}
