@@ -1,67 +1,3 @@
-<<<<<<< HEAD
-<!--<nav class="navbar navbar-expand-sm bg-light navbar-light">
-	<div class="container-fluid">
-		<a class="navbar-brand" href="/">Home</a>
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-          <span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="collapsibleNavbar">
-			<ul class="nav navbar-nav">
-				<li class="nav-item">
-				<a {% if active_page == "p1" %} class="nav-link active"{% else %}class="nav-link"{% endif %} href="/page1">Page 1</a>
-				</li>
-				<li class="nav-item">
-				<a {% if active_page == "p2" %} class="nav-link active"{% else %}class="nav-link"{% endif %} href="/page2">Page 2</a>
-				</li>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-			{% if logged_in %}
-			<li><p class="navbar-text">{{ session['user_data']['name']}}</li>
-			<li><p class="navbar-text">Github userid: {{ session['user_data']['login']}}</li>
-			{% endif %}
-			<li>
-				{% if logged_in %}
-				<a href="/logout">Logout</a>
-				{% else %}
-				<a href="/login">Login</a>
-				{% endif %}
-			</li>
-		</ul>
-        </div>
-    </div>
-</nav>
--->
-<nav class="navbar navbar-expand-sm bg-light">
-	<div class="container-fluid">
-	
-		<a class="navbar-brand" href="/">Home</a>
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-          <span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="collapsibleNavbar">
-		<ul class="nav navbar-nav">
-			<li class="nav-item">
-				<a {% if active_page == "p1" %} class="nav-link active"{% else %}class="nav-link"{% endif %} href="/page1">Page 1</a>
-				</li>
-				<li class="nav-item">
-				<a {% if active_page == "p2" %} class="nav-link active"{% else %}class="nav-link"{% endif %} href="/page2">Page 2</a>
-				</li>
-		</ul>
-		<ul class="nav navbar-nav justify-content-end">
-			{% if logged_in %}
-			<li><p class="navbar-text">{{ session['user_data']['name']}}</li>
-			<li><p class="navbar-text">Github userid: {{ session['user_data']['login']}}</li>
-			{% endif %}
-			<li>
-			{% if logged_in %}
-			<a href="/logout">Logout</a>
-			{% else %}
-			<a href="/login">Login</a>
-			{% endif %}
-			</li>
-		</ul>
-		</div>
-=======
 <nav class="navbar navbar-expand-sm bg-light">
 
 	<div class="container-fluid">
@@ -81,12 +17,11 @@
 			{% endif %}
 			<li class="nav-item">
 				{% if logged_in %}
-				<a class="nav-link btn btn-info" href="/logout">Logout</a>
+				<a class="nav-link btn btn-info nb" href="/logout">Logout</a>
 				{% else %}
-				<a class="nav-link btn btn-info" href="/login">Login</a>
+				<a class="nav-link btn btn-info nb" href="/login">Login</a>
 				{% endif %}
 			</li>
 		</ul>
->>>>>>> dfe18f53d8d37d4c72331d2a26f621abfc44475d
 	</div><!-- /.container-fluid -->
 </nav>
