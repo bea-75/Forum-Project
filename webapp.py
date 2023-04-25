@@ -3,11 +3,15 @@ from flask_oauthlib.client import OAuth
 #from flask_oauthlib.contrib.apps import github #import to make requests to GitHub's OAuth
 from flask import render_template
 from datetime import date
+from random import randint, randrange
 
 import pymongo
 import sys
 import pprint
 import os
+import uuid
+import random
+
 
 # This code originally from https://github.com/lepture/flask-oauthlib/blob/master/example/github.py
 # Edited by P. Conrad for SPIS 2016 to add getting Client Id and Secret from
@@ -85,13 +89,12 @@ def authorized():
             message='Unable to login, please try again.  '
     return render_template('message.html', message=message)
 
+@app.route('/forum-created')
+def renderCreated():
+    print('hello')
 
 @app.route("/create-forum")
 def renderForumMaker():
-    if 'title' in session:
-        session.pop('title')
-        session.pop('contentt')
-        session.pop('forum')
     return render_template("forum_maker.html")
 
 @app.route('/page1', methods = ["POST", 'GET'])
@@ -99,8 +102,9 @@ def renderPage1():
     global today
     global user
     if request.method == 'POST':
-        make_doc(request.form['title'], request.form['contentt'], today.strftime("%m/%d/%y"), request.form['forum'], session['user_data']['login']) 
-        return render_template('post-template.html', title = request.form['title'])
+        id = random.random()
+        make_doc(id, request.form['title'], request.form['contentt'], today.strftime("%m/%d/%y"), request.form['forum'], session['user_data']['login']) 
+        return render_template('post-template.html', id = id)
     return render_template('page1.html')
 
 @app.route('/page2')
@@ -116,8 +120,8 @@ def render_google_verification():
 def get_github_oauth_token():
     return session['github_token']
 
-def make_doc(title, content, date, forum, user):
-    doc = {"Title": title, "User": user, "Date": date, "Content": content, "Forum": forum}
+def make_doc(id, title, content, date, forum, user):
+    doc = {'SPECIALID': id, "Title": title, "User": user, "Date": date, "Content": content, "Forum": forum}
     collection.insert_one(doc)
     
 

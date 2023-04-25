@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!--<nav class="navbar navbar-expand-sm bg-light navbar-light">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="/">Home</a>
@@ -61,32 +60,5 @@
 			</li>
 		</ul>
 		</div>
-=======
-<nav class="navbar navbar-expand-sm bg-light">
-
-	<div class="container-fluid">
-		<ul class="navbar-nav">
-			<a class="navbar-brand" href="/">Home</a>
-			<li class="nav-item">
-				<a class="nav-link" href="/page1">Cooking</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="/page2">Baking</a>
-			</li>
-		</ul>
-			
-		<ul class="nav navbar-nav justify-content-end">
-			{% if logged_in %}
-			<li class="navbar-text">Github userid: {{ session['user_data']['login']}}</li>
-			{% endif %}
-			<li class="nav-item">
-				{% if logged_in %}
-				<a class="nav-link btn btn-info" href="/logout">Logout</a>
-				{% else %}
-				<a class="nav-link btn btn-info" href="/login">Login</a>
-				{% endif %}
-			</li>
-		</ul>
->>>>>>> dfe18f53d8d37d4c72331d2a26f621abfc44475d
 	</div><!-- /.container-fluid -->
 </nav>
