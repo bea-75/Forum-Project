@@ -2,6 +2,7 @@ from flask import Flask, redirect, url_for, session, request, jsonify
 from flask_oauthlib.client import OAuth
 #from flask_oauthlib.contrib.apps import github #import to make requests to GitHub's OAuth
 from flask import render_template
+from datetime import date
 
 import pymongo
 import sys
@@ -41,6 +42,8 @@ db_name = os.environ["MONGO_DBNAME"]
 client = pymongo.MongoClient(connection_string)
 db = client[db_name]
 collection = db['Recipes']
+
+today = date.today()
 
 #context processors run before templates are rendered and add variable(s) to the template's context
 #context processors must return a dictionary 
@@ -85,10 +88,19 @@ def authorized():
 
 @app.route("/create-forum")
 def renderForumMaker():
+    if 'title' in session:
+        session.pop('title')
+        session.pop('contentt')
+        session.pop('forum')
     return render_template("forum_maker.html")
 
-@app.route('/page1')
+@app.route('/page1', methods = ["POST", 'GET'])
 def renderPage1():
+    global today
+    global user
+    if request.method == 'POST':
+        make_doc(request.form['title'], request.form['contentt'], today.strftime("%m/%d/%y"), request.form['forum'], session['user_data']['login']) 
+        return render_template('post-template.html', title = request.form['title'])
     return render_template('page1.html')
 
 @app.route('/page2')
@@ -104,6 +116,10 @@ def render_google_verification():
 def get_github_oauth_token():
     return session['github_token']
 
+def make_doc(title, content, date, forum, user):
+    doc = {"Title": title, "User": user, "Date": date, "Content": content, "Forum": forum}
+    collection.insert_one(doc)
+    
 
 if __name__ == '__main__':
     app.run()
