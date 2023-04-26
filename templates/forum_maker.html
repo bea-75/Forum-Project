@@ -3,10 +3,7 @@
 {% block title %}Forum Creator{% endblock %}
 
 {% block content %}
-<<<<<<< HEAD
 
-=======
->>>>>>> 4d0627b33534a334f9e9e6899970627e2dfd5c67
 <h1>Create a Forum</h1>
 {% if logged_in %}
 <form action="/page1" method = 'post'>
@@ -40,38 +37,8 @@
 <form action="/page1">
 <button type="submit" class="btn btn-primary">Return to Previous Page</button>
 </form>
-<<<<<<< HEAD
+
 {% endif %}
 
-  <h1>Create a Forum</h1>
-
-{% if logged_in %}
-	<form action="/page1">
-	  <div class="mb-3 mt-3">
-		<label for="title" class="form-label">Title:</label>
-		<input type="title" class="form-control" id="title" placeholder="Enter Title" name="title">
-	  </div>
-	  <br>
-	  <div class="mb-3">
-		<label for="contentt" class="form-label">Content:</label>
-		<input type="contentt" class="form-control" rows = "7" id="contentt" placeholder="Enter content" name="contentt">
-	  </div>
-	  <br>
-	  <div>
-		<label for='forum' class = 'form-label'>Which forum would you like to post this to?
-		<select id = 'forum' class="form-select">
-			<option>Baking Forum</option>
-			<option>Cooking Forum</option>
-		</select>
-	  </div>
-	  <br>
-	  <button type="submit" class="btn btn-primary">Submit</button>
-	</form>
-{% else %}
-	<p>Please log in to post to the forum.</p>
-
-=======
->>>>>>> 4d0627b33534a334f9e9e6899970627e2dfd5c67
-{% endif %}
 
 {% endblock %}

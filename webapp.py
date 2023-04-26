@@ -22,7 +22,7 @@ import random
 app = Flask(__name__)
 
 app.debug = True #Change this to False for production
-#os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1' #Remove once done debugging
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1' #Remove once done debugging
 
 app.secret_key = os.environ['SECRET_KEY'] #used to sign session cookies
 oauth = OAuth(app)
@@ -41,12 +41,12 @@ github = oauth.remote_app(
     authorize_url='https://github.com/login/oauth/authorize' #URL for github's OAuth login
 )
 
-connection_string = os.environ["MONGO_CONNECTION_STRING"]
-db_name = os.environ["MONGO_DBNAME"]
+# connection_string = os.environ["MONGO_CONNECTION_STRING"]
+# db_name = os.environ["MONGO_DBNAME"]
     
-client = pymongo.MongoClient(connection_string)
-db = client[db_name]
-collection = db['Recipes']
+# client = pymongo.MongoClient(connection_string)
+# db = client[db_name]
+# collection = db['Recipes']
 
 today = date.today()
 
@@ -111,11 +111,8 @@ def renderPage1():
 
 @app.route('/page2')
 def renderPage2():
-    return render_template('page2.html')
-
-@app.route('/googleb4c3aeedcc2dd103.html')
-def render_google_verification():
-    return render_template('googleb4c3aeedcc2dd103.html')
+    tst = access_docs()
+    return render_template('page2.html', tst=access_docs())
 
 #the tokengetter is automatically called to check who is logged in.
 @github.tokengetter
@@ -125,6 +122,18 @@ def get_github_oauth_token():
 def make_doc(id, title, content, date, forum, user):
     doc = {'SPECIALID': id, "Title": title, "User": user, "Date": date, "Content": content, "Forum": forum}
     collection.insert_one(doc)
+    
+def access_docs():
+    connection_string = os.environ["MONGO_CONNECTION_STRING"]
+    db_name = os.environ["MONGO_DBNAME"]
+    
+    client = pymongo.MongoClient(connection_string)
+    db = client[db_name]
+    collection = db['Recipes'] 
+    
+    for doc in collection.find({},{ "_id": 0 }):
+        return(doc)
+
     
 
 if __name__ == '__main__':
