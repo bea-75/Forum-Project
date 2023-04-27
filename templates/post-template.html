@@ -4,8 +4,16 @@
 {{ super() }}
 
 <br>
-<div>
-<h3>{{ title }}</h3>
+<div class="card">
+	<div class="card-header">
+		<h4 class="card-title">{{ title }}</h4>
+		<span class="card-text">{{ user }}</span>
+		<span class="card-text right">{{ date }}</span>
+	</div>
+	<div class="card-body">
+		<p class="card-body">{{ content }}</p>
+	</div>
 </div>
+
 
 {% endblock %}

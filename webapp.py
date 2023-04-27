@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, session, request, jsonify
+from flask import Flask, redirect, url_for, session, request, jsonify, Markup
 from flask_oauthlib.client import OAuth
 #from flask_oauthlib.contrib.apps import github #import to make requests to GitHub's OAuth
 from flask import render_template
@@ -11,7 +11,11 @@ import pprint
 import os
 import uuid
 import random
+import requests
 
+#param = {'post_posted': 1}
+#r = requests.get('http://127.0.0.1:5000/get', params=param)
+#print(r.status_code)
 
 # This code originally from https://github.com/lepture/flask-oauthlib/blob/master/example/github.py
 # Edited by P. Conrad for SPIS 2016 to add getting Client Id and Secret from
@@ -103,8 +107,16 @@ def renderPage1():
     global user
     if request.method == 'POST':
         id = random.random()
-        make_doc(id, request.form['title'], request.form['contentt'], today.strftime("%m/%d/%y"), request.form['forum'], session['user_data']['login']) 
-        return render_template('post-template.html', id = id)
+        make_doc(id, request.form['title'], request.form['contentt'], today.strftime("%m/%d/%y"), request.form['forum'], session['user_data']['login'])
+        for doc in collection.find({'SPECIALID': id}):
+            title = doc["Title"]
+            user = doc["User"]
+            date = doc["Date"]
+            content = doc["Content"]
+            fourm = doc["Forum"]
+            post = "<br> "
+            post = post + Markup("\n<div class='card'> \n\t<div class='card-header'>\n\t\t<h4 class='card-title'>"+title+"</h4> \n\t\t<span class='card-text'>"+user+"</span> \n\t\t<span class='card-text right'>"+str(date)+"</span> \n\t</div> \n\t<div class='card-body'> \n\t\t<p class='card-body'>"+content+"</p> \n\t</div> \n\r</div>")
+        return post
     return render_template('page1.html')
 
 @app.route('/page2')
@@ -123,7 +135,6 @@ def get_github_oauth_token():
 def make_doc(id, title, content, date, forum, user):
     doc = {'SPECIALID': id, "Title": title, "User": user, "Date": date, "Content": content, "Forum": forum}
     collection.insert_one(doc)
-    
 
 if __name__ == '__main__':
     app.run()
