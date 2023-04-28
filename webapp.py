@@ -138,11 +138,7 @@ def renderPage1():
     global post
     global user
     
-    return render_template('page1.html')
-
-@app.route('/page2')
-def renderPage2():
-    return render_template('page2.html')
+    return render_template('page1.html', posts = post)
 
 @app.route('/googleb4c3aeedcc2dd103.html')
 def render_google_verification():
