@@ -1,10 +1,14 @@
-body {
-
+.row {
+	margin: 20px;
 }
 
-#content {
-     margin-left: 20px;
+.add {
+	margin: 20px;
 }
+
+/*#content {
+    margin-left: 20px;
+}*/
 
 span.right {
 	display: inline;
