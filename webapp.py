@@ -108,14 +108,13 @@ def renderPage1():
     global user
     if request.method == 'POST':
         id = random.random()
-        make_doc(id, request.form['title'], request.form['contentt'], today.strftime("%m/%d/%y"), request.form['forum'], session['user_data']['login'])
+        make_doc(id, request.form['title'], request.form['contentt'], today.strftime("%m/%d/%y"), session['user_data']['login'])
         for doc in collection.find({'SPECIALID': id}):
             title = doc["Title"]
             user = doc["User"]
             date = doc["Date"]
             content = doc["Content"]
-            fourm = doc["Forum"]
-            post = post + Markup("<br> \n<div class='card add'> \n\t<div class='card-header'>\n\t\t<h4 class='card-title'>"+title+"</h4> \n\t\t<span class='card-text'>"+user+"</span> \n\t\t<span class='card-text right'>"+str(date)+"</span> \n\t</div> \n\t<div class='card-body'> \n\t\t<p class='card-body'>"+content+"</p> \n\t</div> \n\r</div>")
+            post = Markup("<br> \n<div class='card add'> \n\t<div class='card-header'>\n\t\t<h4 class='card-title'>"+title+"</h4> \n\t\t<span class='card-text'>"+user+"</span> \n\t\t<span class='card-text right'>"+str(date)+"</span> \n\t</div> \n\t<div class='card-body'> \n\t\t<p class='card-body'>"+content+"</p> \n\t</div> \n\r</div>") + post
         return render_template('page1.html', posts = post)
     return render_template('page1.html')
 
@@ -132,8 +131,8 @@ def render_google_verification():
 def get_github_oauth_token():
     return session['github_token']
 
-def make_doc(id, title, content, date, forum, user):
-    doc = {'SPECIALID': id, "Title": title, "User": user, "Date": date, "Content": content, "Forum": forum}
+def make_doc(id, title, content, date, user):
+    doc = {'SPECIALID': id, "Title": title, "User": user, "Date": date, "Content": content}
     collection.insert_one(doc)
 
 if __name__ == '__main__':
