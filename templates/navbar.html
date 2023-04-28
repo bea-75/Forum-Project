@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-expand-sm bg-light">
 
 	<div class="container-fluid">
@@ -15,6 +14,7 @@
 		<ul class="nav navbar-nav justify-content-end">
 			{% if logged_in %}
 			<li class="navbar-text">Github userid: {{ session['user_data']['login']}}</li>
+			<li class="navbar-text text-light">.....<li>
 			{% endif %}
 			<li class="nav-item">
 				{% if logged_in %}
@@ -26,4 +26,3 @@
 		</ul>
 	</div>
 </nav>
-

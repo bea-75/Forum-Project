@@ -3,10 +3,11 @@
 {% block title %}page1{% endblock %}
 
 {% block content %}
-  <h1>This is Page 1</h1>
-
-<p>Lorem ipsum sit dolor amet.</p>
-
-<a href="/create-forum" class="btn btn-primary">Create New Forum</a>
+<div class="row">
+	<div class="col"><h1>Cooking Forum</h1></div>
+	<div class="col"><a style = 'float: right' href="/create-forum" class="btn btn-info">Create New Forum</a></div>
+</div>
+<br>
+{{ posts }}
 
 {% endblock %}

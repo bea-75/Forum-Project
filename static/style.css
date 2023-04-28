@@ -1,16 +1,26 @@
-body {
-
+.row {
+	margin: 20px;
 }
 
-#content {
-     margin-left: 20px;
+.add {
+	margin: 20px;
 }
+
+/*#content {
+    margin-left: 20px;
+}*/
 
 span.right {
 	display: inline;
 	float: right;
 }
 
-.nb {
-	margin-left: 10px;
+a.log {
+	text-decoration: none;
+	color: blue;
+}
+
+a.log:hover {
+	text-decoration: underline;
+	color: blue;
 }
