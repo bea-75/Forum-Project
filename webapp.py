@@ -93,10 +93,41 @@ def authorized():
             message='Unable to login, please try again.  '
     return render_template('message.html', message=message)
 
-@app.route('/forum-created')
-def renderCreated():
+@app.route('/create-forum/rendering', methods = ['GET', 'POST'])
+def renderRendering():
     print('hello')
-
+    global post
+    banned_words = ['test', 'hello']
+    if request.method == 'POST':
+        id = random.random()
+        content = request.form['contentt']
+        title = request.form['title']
+        for word in title.casefold().split():
+            for wword in content.casefold().split():
+                if word in banned_words:
+                    return redirect(url_for('renderBanned'))
+                elif wword in banned_words:
+                    return redirect(url_for('renderBanned')) 
+                else:
+                    make_doc(id, request.form['title'], request.form['contentt'], today.strftime("%m/%d/%y"), session['user_data']['login'])
+                    for doc in collection.find({'SPECIALID': id}):
+                        ttitle = doc["Title"]
+                        user = doc["User"]
+                        date = doc["Date"]
+                        contentt = doc["Content"]
+                        post = Markup("<br> \n<div class='card add'> \n\t<div class='card-header'>\n\t\t<h4 class='card-title'>"+ttitle+"</h4> \n\t\t<span class='card-text'>"+user+"</span> \n\t\t<span class='card-text right'>"+str(date)+"</span> \n\t</div> \n\t<div class='card-body'> \n\t\t<p class='card-body'>"+contentt+"</p> \n\t</div> \n\r</div>") + post
+                    return redirect(url_for("renderCreated"))
+        
+@app.route('/create-forum/created')
+def renderCreated(): 
+    message = 'Post created'
+    return render_template("message.html", message = message)
+    
+@app.route('/create-forum/banned')
+def renderBanned(): 
+    message = "Your content and/or title contains profanity, unable to post"
+    return render_template("message.html", message = message)
+    
 @app.route("/create-forum")
 def renderForumMaker():
     return render_template("forum_maker.html")
@@ -106,16 +137,7 @@ def renderPage1():
     global today
     global post
     global user
-    if request.method == 'POST':
-        id = random.random()
-        make_doc(id, request.form['title'], request.form['contentt'], today.strftime("%m/%d/%y"), session['user_data']['login'])
-        for doc in collection.find({'SPECIALID': id}):
-            title = doc["Title"]
-            user = doc["User"]
-            date = doc["Date"]
-            content = doc["Content"]
-            post = Markup("<br> \n<div class='card add'> \n\t<div class='card-header'>\n\t\t<h4 class='card-title'>"+title+"</h4> \n\t\t<span class='card-text'>"+user+"</span> \n\t\t<span class='card-text right'>"+str(date)+"</span> \n\t</div> \n\t<div class='card-body'> \n\t\t<p class='card-body'>"+content+"</p> \n\t</div> \n\r</div>") + post
-        return render_template('page1.html', posts = post)
+    
     return render_template('page1.html')
 
 @app.route('/page2')
