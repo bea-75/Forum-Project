@@ -20,6 +20,22 @@
     
 	{% include 'navbar.html' %}
 	
+		{% with messages = get_flashed_messages(with_categories=true) %} 
+      {% if messages %}
+         {% for category, message in messages %}
+            {% if category == "message" %}
+              {% set cls = "alert alert-success alert-dismissible" %}
+            {% elif category == "error" %}
+              {% set cls = "alert alert-danger alert-dismissible" %}
+            {% endif %}
+            <div class="{{ cls }}">
+              <button type="button" class="btn-close" data-dismiss="alert"></button>
+              {{ message }}
+            </div>
+         {% endfor %}
+      {% endif %}
+    {% endwith %}
+	
     <div id="content">
 		{% block content %}{% endblock %}
 	</div>

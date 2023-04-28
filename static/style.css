@@ -23,4 +23,7 @@ a.log {
 a.log:hover {
 	text-decoration: underline;
 	color: blue;
+
+.nb {
+	margin-left: 10px;
 }

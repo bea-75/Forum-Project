@@ -3,6 +3,7 @@ from flask_oauthlib.client import OAuth
 #from flask_oauthlib.contrib.apps import github #import to make requests to GitHub's OAuth
 from flask import render_template
 from datetime import date
+from flask import flash
 from random import randint, randrange
 
 import pymongo
@@ -72,26 +73,27 @@ def login():
 @app.route('/logout')
 def logout():
     session.clear()
-    return render_template('message.html', message='You were logged out')
+    flash('You were logged out successfully.')
+    return redirect('/')
 
 @app.route('/login/authorized')
 def authorized():
     resp = github.authorized_response()
     if resp is None:
         session.clear()
-        message = 'Access denied: reason=' + request.args['error'] + ' error=' + request.args['error_description'] + ' full=' + pprint.pformat(request.args)      
+        flash('Access denied: reason=' + request.args['error'] + ' error=' + request.args['error_description'] + ' full=' + pprint.pformat(request.args), 'error')      
     else:
         try:
             session['github_token'] = (resp['access_token'], '') #save the token to prove that the user logged in
             session['user_data']=github.get('user').data
             #pprint.pprint(vars(github['/email']))
             #pprint.pprint(vars(github['api/2/accounts/profile/']))
-            message='You were successfully logged in as ' + session['user_data']['login'] + '.'
+            flash('You were successfully logged in as ' + session['user_data']['login'] + '.')
         except Exception as inst:
             session.clear()
             print(inst)
-            message='Unable to login, please try again.  '
-    return render_template('message.html', message=message)
+            flash('Unable to login, please try again.', 'error')
+    return redirect('/')
 
 @app.route('/create-forum/rendering', methods = ['GET', 'POST'])
 def renderRendering():
@@ -120,13 +122,13 @@ def renderRendering():
         
 @app.route('/create-forum/created')
 def renderCreated(): 
-    message = 'Post created'
-    return render_template("message.html", message = message)
+    flash('Post created')
+    return redirect('/page1')
     
 @app.route('/create-forum/banned')
 def renderBanned(): 
-    message = "Your content and/or title contains profanity, unable to post"
-    return render_template("message.html", message = message)
+    flash("Your content and/or title contains profanity, unable to post", 'error')
+    return redirect('/page1')
     
 @app.route("/create-forum")
 def renderForumMaker():
