@@ -111,8 +111,8 @@ def renderPage1():
 
 @app.route('/page2')
 def renderPage2():
-    tst = access_docs()
-    return render_template('page2.html', tst=access_docs())
+    data = access_docs()
+    return render_template('page2.html', title=data[0], user=data[1], date=data[2], content=data[3], forum=data[4])
 
 #the tokengetter is automatically called to check who is logged in.
 @github.tokengetter
@@ -131,8 +131,13 @@ def access_docs():
     db = client[db_name]
     collection = db['Recipes'] 
     
-    for doc in collection.find({},{ "_id": 0 }):
-        return(doc)
+    for doc in collection.find():
+        title = doc["Title"]
+        user = doc["User"]
+        date = doc["Date"]
+        content = doc["Content"]
+        forum = doc["Forum"]
+    return title, user, date, content, forum
 
     
 
