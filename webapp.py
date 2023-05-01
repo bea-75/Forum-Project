@@ -53,6 +53,12 @@ collection = db['Recipes']
 
 today = date.today()
 post = ""
+for doc in collection.find():
+    ttitle = doc["Title"]
+    user = doc["User"]
+    date = doc["Date"]
+    contentt = doc["Content"]
+    post = Markup("<br> \n<div class='card add'> \n\t<div class='card-header'>\n\t\t<h4 class='card-title'>"+ttitle+"</h4> \n\t\t<span class='card-text'>"+user+"</span> \n\t\t<span class='card-text right'>"+str(date)+"</span> \n\t</div> \n\t<div class='card-body'> \n\t\t<p class='card-body'>"+contentt+"</p> \n\t</div> \n\r</div>") + post
 
 with open('profanity.txt') as p:
     words = p.read();
