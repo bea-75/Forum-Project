@@ -54,6 +54,9 @@ collection = db['Recipes']
 today = date.today()
 post = ""
 
+with open('profanity.txt') as p:
+    words = p.read();
+
 #context processors run before templates are rendered and add variable(s) to the template's context
 #context processors must return a dictionary 
 #this context processor adds the variable logged_in to the conext for all templates
@@ -97,18 +100,17 @@ def authorized():
 
 @app.route('/create-forum/rendering', methods = ['GET', 'POST'])
 def renderRendering():
-    print('hello')
+    global words
     global post
-    banned_words = ['test', 'hello']
     if request.method == 'POST':
         id = random.random()
         content = request.form['contentt']
         title = request.form['title']
-        for word in title.casefold().split():
-            for wword in content.casefold().split():
-                if word in banned_words:
+        for t in title.casefold().split():
+            for c in content.casefold().split():
+                if t in words:
                     return redirect(url_for('renderBanned'))
-                elif wword in banned_words:
+                elif c in words:
                     return redirect(url_for('renderBanned')) 
                 else:
                     make_doc(id, request.form['title'], request.form['contentt'], today.strftime("%m/%d/%y"), session['user_data']['login'])
@@ -123,18 +125,18 @@ def renderRendering():
 @app.route('/create-forum/created')
 def renderCreated(): 
     flash('Post created')
-    return redirect('/page1')
+    return redirect('/recipe-forum')
     
 @app.route('/create-forum/banned')
 def renderBanned(): 
     flash("Your content and/or title contains profanity, unable to post", 'error')
-    return redirect('/page1')
+    return redirect('/recipe-forum')
     
 @app.route("/create-forum")
 def renderForumMaker():
     return render_template("forum_maker.html")
 
-@app.route('/page1', methods = ["POST", 'GET'])
+@app.route('/recipe-forum', methods = ["POST", 'GET'])
 def renderPage1():
     global today
     global post
