@@ -15,15 +15,10 @@ span.right {
 	float: right;
 }
 
-a.log {
-	text-decoration: none;
-	color: blue;
-}
-
-a.log:hover {
-	text-decoration: underline;
-	color: blue;
-
 .nb {
 	margin-left: 10px;
+}
+
+.footer {
+	color: gray;
 }
