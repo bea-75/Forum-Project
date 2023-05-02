@@ -6,16 +6,20 @@
 {% if logged_in %}
 <div class = 'add'>
 	<h1>Create a Forum</h1>
-	<form action="/create-forum/rendering" method = 'post'>
+	<form action="/create-forum/rendering" method = 'post' class="was-validated">
 		<br>
 		<div class="mb-3 mt-3">
 			<label for="title" class="form-label">Title:</label>
-			<input type="title" class="form-control" id="title" placeholder="Enter Title" name="title">
+			<input type="title" class="form-control" id="title" placeholder="Enter Title" name="title" required>
+			<div class="valid-feedback">Valid.</div>
+			<div class="invalid-feedback">Please fill out this field.</div>
 		</div>
 		<br>
 		<div class="mb-3">
 			<label for="contentt" class="form-label">Content:</label>
-			<input type="contentt" class="form-control" rows = "7" id="contentt" placeholder="Enter content" name="contentt">
+			<textarea class="form-control" rows="5" id="contentt" placeholder="Enter Content" name="contentt" required></textarea>
+			<div class="valid-feedback">Valid.</div>
+			<div class="invalid-feedback">Please fill out this field.</div>
 		</div>
 		<br>
 		<button type="submit" class="btn btn-info">Submit</button>
